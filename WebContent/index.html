@@ -1,0 +1,144 @@
+<html>
+
+<head>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/c/video.js"></script>
+<script src="js/jquery.raty.min.js"></script>
+<script src="js/jquery.simplePagination.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script src="js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"></link>
+<link rel="stylesheet" type="text/css"
+	href="css/bootstrap-responsive.min.css"></link>
+<link rel="stylesheet" type="text/css" href="css/main.css"></link>
+<link rel="stylesheet" type="text/css" href="css/simplePagination.css"></link>
+
+
+<script>
+	
+</script>
+<title>newbtube</title>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<div class="navbar-inner">
+				<a class="brand" href="#">newbtube</a>
+				<ul class="nav">
+					<li class="active" id="bydate"><a href="#_">Latest Videos</a></li>
+					<li class="active" id="byrating"><a href="#_">Best Rated</a></li>
+					<li class="active" id="byhits"><a href="#_">Most Popular</a></li>
+					<li class="active" id="uploadToggle"><a href="#_">Upload</a></li>
+				</ul>
+			</div>
+			 
+		</div>
+		
+		<div id="upload">
+			<form id="uploadform">
+
+				<table class="table-striped">
+					<tr>
+						<td><label for="name">Name</label></td>
+						<td><input type="text" name="name" id="uplName"></input></td>
+					</tr>
+					<tr>
+						<td><label for="descr">Description</label></td>
+						<td><input type="text" name="descr" id="uplDescr"></input></td>
+					</tr>
+					<tr>
+						<td><label for="file">Upload Video</label></td>
+						<td><input type="file" name="file" accept="video/*" id="file"></input></td>
+					</tr>
+					<tr>
+						<td><label for="thumb">Upload Thumbnail</label></td>
+						<td><input type="file" name="thumb" accept="image/*"
+							id="thumbFile"></input></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="button" class="btn" id="butt" value="Upload"></input></td>
+					</tr>
+				</table>
+
+			</form>
+			<h3 class="wait">Please wait...</h3>
+			<div id="progressbar"></div>
+		</div>
+
+
+		<div class="container-fluid">
+
+			<div class="row-fluid">
+
+
+				<div class="span4">
+					<div class="paginate"></div>
+
+					<div id="vidListContainer"></div>
+				</div>
+
+
+
+				<div class="span7 offset1">
+					<div id="vidPlayContainer">
+						<div class="row">
+							<div class="span8">
+								<h3 id="name" style="font-family:times,cursive;color:grey;"></h3>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="span3"><h4>Avg Rating:</h4></div>
+							<div class="span2"><div id="star"></div></div>
+							<div class="span2"><button class="delPlay btn btn-danger">Delete</button></div>
+						</div>
+						
+						<div class="row">
+							<div class="span2"><h4>Hits:</h4></div>
+							<div class="span2"><h4 id="hits"></h4></div>
+						</div>
+						
+						<div class="row">
+							<div class="span4">
+								<video id="player" class="video-js vjs-default-skin" controls
+									preload="auto" width="640" height="480"
+									data-setup='{"techOrder": ["flash"]}'>
+									<source id="vidSrc" src="#_" type="video/mp4"></source>
+								</video>
+							</div>
+						</div>
+						<div class="row"><hr></hr></div>
+						<div class="row">
+							<div class="span4">
+								
+								<h5 id="playDescr" style="font-style:italic;"></h5>
+							</div>
+						</div>
+						<div class="row"><hr></hr></div>
+						
+					</div>
+
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+
+	</div>
+
+
+
+
+</body>
+
+</html>

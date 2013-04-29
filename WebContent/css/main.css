@@ -1,0 +1,16 @@
+.vidListItem {
+	display:block;
+}
+#vidPlayContainer{
+	margin:auto;
+	left:auto;
+	right:auto;
+}
+#upload{
+	width:500px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#star{
+	padding-top:7px;
+}
