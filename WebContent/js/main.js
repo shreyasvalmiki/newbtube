@@ -15,12 +15,15 @@ $(function(){
 		switch(currOrder){
 		case "by-date-desc":
 			getLatestVideos();
+			$("#vidListContainer").fadeIn("slow");
 			break;
 		case "by-rating-desc":
 			getBestVideos();
+			$("#vidListContainer").fadeIn("slow");
 			break;
 		case "by-hits-desc":
 			getPopularVideos();
+			$("#vidListContainer").fadeIn("slow");
 			break;
 		}
 
@@ -51,6 +54,8 @@ $(function(){
 	$("#star").raty();
 	
 	
+	
+	
 	function disableForm(){
 		$("input").prop("disabled",true);
 	}
@@ -60,8 +65,8 @@ $(function(){
 	}
 	
 	function clearForm(){
-		$("#name").val("");
-		$("#descr").val("");
+		$("#uplName").val("");
+		$("#uplDescr").val("");
 		$("#file").val("");
 		$("#thumbFile").val("");
 	}
@@ -75,6 +80,9 @@ $(function(){
 			async:false,
 			success:function(video){
 				curVideo = video;
+				
+				curVideo["path"] = curVideo["path"].replace("https://s3.amazonaws.com/newbtube/","http://d3gf292bi7knwd.cloudfront.net/")
+				//alert(curVideo["path"]);
 			}
 		});
 	}
@@ -97,7 +105,7 @@ $(function(){
 			var avgRating = videos[i]['possRatings'] == 0? 0 : (videos[i]["ratings"]/videos[i]["possRatings"])*5;
 			htmlContent += '<li class="vidListItem" id="'+videos[i]['id']+'">';
 			htmlContent += '<a href="#_"><h4>'+videos[i]['name']+'</h4>';
-			htmlContent += '<img src="'+videos[i]['thumbPath']+'" width="160px" height="120px"></img></a>';
+			htmlContent += '<img class="thumbHolder" src="'+videos[i]['thumbPath']+'" width="160px" height="120px"></img></a>';
 			htmlContent += '<p><b>Avg Rating: </b>'+avgRating+'</p><p><b>Hits: </b>'+videos[i]["hits"]+'</p>';
 			htmlContent += '<hr></hr></li>';
 		}
@@ -109,7 +117,7 @@ $(function(){
 	function setPlayer(list){
 		
 		var id = list.attr("id");
-		
+		$("#vidPlayContainer").show();
 		setCurVideo(id);
 		hit(id);
 		
@@ -138,11 +146,19 @@ $(function(){
 			});
 		}
 		$("#hits").html(curVideo["hits"]);
-		_V_("player").src(curVideo["path"]);
+		_V_("player").src([{src:curVideo["path"],type:"video/mp4"}]);
 		$("#playDescr").html(curVideo["descr"]);
 		_V_("player").play();
 		
-		 $("html, body").animate({ scrollTop: 60 }, 600);
+		 $("html, body").animate({ scrollTop: 0 }, 1000);
+		 
+		/* jwplayer("player").setup({
+		        file: curVideo["path"],
+		        image: curVideo["thumbPath"],
+		        width: "550",
+		        height: "303.75"
+		    });*/
+		 
 		
 	}
 	
@@ -161,9 +177,10 @@ $(function(){
 			        nextText:">",
 			        hrefTextPrefix:"#",
 			        onPageClick: function(num,event){
+			        		$("#vidListContainer").fadeOut("slow");
 			        		factoryCall(num);
 			        	},
-			        cssStyle: 'dark-theme'
+			        cssStyle: 'compact-theme'
 			    });
 				
 			}
@@ -180,7 +197,7 @@ $(function(){
 			setPlayer($(this));
 		});
 		
-		setPlayer($(".vidListItem").eq(0));
+		//setPlayer($(".vidListItem").eq(0));
 		
 	}
 
@@ -249,6 +266,7 @@ $(function(){
 		
 		if(evt.lengthComputable){
 			var pct = Math.round(evt.loaded/evt.total)*100;
+			//$("#pct").html("Uploaded "+pct+"%");
 			if(pct < 100){
 				disableForm();
 				updateProgress(pct);
@@ -260,7 +278,7 @@ $(function(){
 	function uploadClick(event){
 		disableForm();
 		$('.wait').show();
-		$('#progressbar').show();
+		//$('#progressbar').show();
 		if($.trim($('#uplName').val()) != "" && $("#file").val() != ""){
 			var input = document.getElementById("file"),formdata=false;
 			var thumbInput = document.getElementById("thumbFile");
@@ -299,7 +317,7 @@ $(function(){
 
 					//updateProgress(100);
 				};
-				reader.readAsDataURL(file);
+				reader.readAsBinaryString(file);
 			}
 			
 			
@@ -331,6 +349,9 @@ $(function(){
 					enableForm();
 					$('.wait').hide();
 					$('#progressbar').hide();
+					$("pct").hide();
+					clearNavSelection();
+					$("#bydate").attr("class","active");
 				}
 			});
 			
@@ -352,10 +373,12 @@ $(function(){
 	$("#uploadToggle").on('click',function(){
 		if(!isUplOpen){
 			$("#upload").slideDown("slow");
+			$("#uploadToggle").attr("class","active");
 			isUplOpen=true;
 		}
 		else{
 			$("#upload").slideUp("slow");
+			$("#uploadToggle").attr("class","");
 			isUplOpen=false;
 		}
 	});
@@ -373,6 +396,9 @@ $(function(){
 				success:function(out){
 					alert("Deleted");
 					factoryCall(currPageNum+1);
+					$("#vidPlayContainer").fadeOut(1000);
+					//setPlayer($(".vidListItem").eq(0));
+					
 				}
 			});
 		}
@@ -390,20 +416,34 @@ $(function(){
 		deleteVid(curVideo["id"]);
 	});
 	
+	function clearNavSelection(){
+		$("#bydate").attr("class","");
+		$("#byrating").attr("class","");
+		$("#byhits").attr("class","");
+	}
 	
 	$("#bydate").on("click",function(){
+		clearNavSelection();
+		$("#vidListContainer").fadeOut("slow");
+		$("#bydate").attr("class","active");
 		setPagination();
 		currOrder = "by-date-desc";
 		factoryCall(1);
 	});
 	
 	$("#byrating").on("click",function(){
+		clearNavSelection();
+		$("#vidListContainer").fadeOut("slow");
+		$("#byrating").attr("class","active");
 		setPagination();
 		currOrder = "by-rating-desc";
 		factoryCall(1);
 	});
 	
 	$("#byhits").on("click",function(){
+		clearNavSelection();
+		$("#vidListContainer").fadeOut("slow");
+		$("#byhits").attr("class","active");
 		setPagination();
 		currOrder = "by-hits-desc";
 		factoryCall(1);
@@ -413,9 +453,13 @@ $(function(){
 	$('document').ready(function(){
 		setPagination();
 		factoryCall(1);
+		clearNavSelection();
+		$("#bydate").attr("class","active");
 		$("#upload").hide();
 		$(".wait").hide();
 		$("#progressbar").hide();
+		$("#pct").hide();
+		$("#vidPlayContainer").hide();
 	});
 	
 });

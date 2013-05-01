@@ -238,7 +238,7 @@ public class VideoDao {
 			if(rs.next())
 				video.setId(rs.getInt(1));
 
-			video.setPath(tube.lib.Constants.S3_ADDRESS_VIDEO_ROOT+video.getId());
+			video.setPath(tube.lib.Constants.S3_ADDRESS_VIDEO_ROOT+video.getId()+".mp4");
 			if(isThumbSet){
 				video.setThumbPath(tube.lib.Constants.S3_ADDRESS_VIDEO_ROOT+"th"+video.getId());
 			}

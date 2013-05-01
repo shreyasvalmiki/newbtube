@@ -21,9 +21,9 @@ public class Constants {
 	public static final String AVAILABILITY_ZONE_EAST = "us-east-1c";
 	public static final String ENDPOINT_US_EAST = "ec2.us-east-1.amazonaws.com";
 	public static final String COMMAND_AVG_CPU_USAGE = "cat /proc/loadavg";
-	public static final String DB_CONN_STRING = "jdbc:mysql://localhost:3306/newbtube";
+	public static final String DB_CONN_STRING = "jdbc:mysql://newbtube.cousga5z2q3c.us-east-1.rds.amazonaws.com/newbtube";
 	public static final String DB_USERNAME = "root";
-	public static final String DB_PASSWORD = "  ";
+	public static final String DB_PASSWORD = "roottoor";
 	public static final int START_HOUR = 9;
 	public static final int END_HOUR = 19;
 	public static final String BUCKET_NAME = "newbtube"; 

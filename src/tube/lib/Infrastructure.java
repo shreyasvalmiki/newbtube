@@ -88,22 +88,28 @@ public class Infrastructure {
 
 	
 	public void uploadVideo(String key,File file,long fileLength){
-		//ObjectMetadata meta = new ObjectMetadata();
-		//meta.setContentLength(fileLength);
+		key = key+".mp4";
+		ObjectMetadata meta = new ObjectMetadata();
+		meta.setContentType("video/mp4");
+		meta.setContentDisposition("inline");
 		//File file = new File(filePath);
 		createS3Bucket();
 		PutObjectRequest putObjReq = new PutObjectRequest(Constants.BUCKET_NAME, key, file);
+		putObjReq.setMetadata(meta);
 		putObjReq.setCannedAcl(CannedAccessControlList.PublicReadWrite);
 		s3.putObject(putObjReq);
 	}
 	
 	
 	public void uploadThumbnail(String key,File file){
+		ObjectMetadata meta = new ObjectMetadata();
+		meta.setContentType("image/*");
 		//ObjectMetadata meta = new ObjectMetadata();
 		//meta.setContentLength(fileLength);
 		//File file = new File(filePath);
 		//createS3Bucket();
 		PutObjectRequest putObjReq = new PutObjectRequest(Constants.BUCKET_NAME, key, file);
+		putObjReq.setMetadata(meta);
 		putObjReq.setCannedAcl(CannedAccessControlList.PublicReadWrite);
 		s3.putObject(putObjReq);
 	}
