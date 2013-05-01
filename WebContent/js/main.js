@@ -42,7 +42,7 @@ $(function(){
 				"score":score
 			},
 			success:function(out){
-				alert("You rated the video: "+score.toString());
+				alert("You rated the video: "+score.toString()+" on 5");
 			}
 		});
 	}
@@ -81,7 +81,7 @@ $(function(){
 			success:function(video){
 				curVideo = video;
 				
-				curVideo["path"] = curVideo["path"].replace("https://s3.amazonaws.com/newbtube/","http://d3gf292bi7knwd.cloudfront.net/")
+				curVideo["path"] = curVideo["path"].replace("https://s3.amazonaws.com/newbtube/","http://d3gf292bi7knwd.cloudfront.net/");
 				//alert(curVideo["path"]);
 			}
 		});
@@ -106,7 +106,7 @@ $(function(){
 			htmlContent += '<li class="vidListItem" id="'+videos[i]['id']+'">';
 			htmlContent += '<a href="#_"><h4>'+videos[i]['name']+'</h4>';
 			htmlContent += '<img class="thumbHolder" src="'+videos[i]['thumbPath']+'" width="160px" height="120px"></img></a>';
-			htmlContent += '<p><b>Avg Rating: </b>'+avgRating+'</p><p><b>Hits: </b>'+videos[i]["hits"]+'</p>';
+			htmlContent += '<p class="playRating"><b>Avg Rating: </b>'+avgRating+'</p><p class="playHits"><b>Hits: </b>'+videos[i]["hits"]+'</p>';
 			htmlContent += '<hr></hr></li>';
 		}
 		htmlContent +='</ul>';
@@ -386,7 +386,7 @@ $(function(){
 	function deleteVid(id){
 		
 		var r = confirm("Are you sure you want to delete this video?");
-		
+		_V_("player").pause();
 		if(r==true){
 			$.ajax({
 				url:"rest/videos/delete/"+id.toString(),
@@ -401,6 +401,9 @@ $(function(){
 					
 				}
 			});
+		}
+		else{
+			
 		}
 		
 		
