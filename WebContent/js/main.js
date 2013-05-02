@@ -42,7 +42,7 @@ $(function(){
 				"score":score
 			},
 			success:function(out){
-				alert("You rated the video: "+score.toString()+" on 5");
+				alert("You rated the video "+score.toString()+" on 5");
 			}
 		});
 	}
@@ -79,8 +79,7 @@ $(function(){
 			contentType:false,
 			async:false,
 			success:function(video){
-				curVideo = video;
-				
+				curVideo = video; 
 				curVideo["path"] = curVideo["path"].replace("https://s3.amazonaws.com/newbtube/","http://d3gf292bi7knwd.cloudfront.net/");
 				//alert(curVideo["path"]);
 			}
@@ -106,7 +105,7 @@ $(function(){
 			htmlContent += '<li class="vidListItem" id="'+videos[i]['id']+'">';
 			htmlContent += '<a href="#_"><h4>'+videos[i]['name']+'</h4>';
 			htmlContent += '<img class="thumbHolder" src="'+videos[i]['thumbPath']+'" width="160px" height="120px"></img></a>';
-			htmlContent += '<p class="playRating"><b>Avg Rating: </b>'+avgRating+'</p><p class="playHits"><b>Hits: </b>'+videos[i]["hits"]+'</p>';
+			htmlContent += '<p class="playRating"><b>Avg Rating: </b>'+avgRating.toFixed(2)+'</p><p class="playHits"><b>Hits: </b>'+videos[i]["hits"]+'</p>';
 			htmlContent += '<hr></hr></li>';
 		}
 		htmlContent +='</ul>';
